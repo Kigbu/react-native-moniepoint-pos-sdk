@@ -12,18 +12,29 @@ export interface TerminalData {
 
 /**
  * Receipt item types supported by Moniepoint POS SDK
+ * Based on official Moniepoint PaaP SDK documentation
  */
-export type ReceiptItemType = 'TITLE' | 'KEY_VALUE' | 'ITEMS' | 'SPACING' | 'SEPARATOR' | 'QR';
+export type ReceiptItemType = 'IMAGE' | 'LABEL' | 'TITLE' | 'KEY_VALUE' | 'ITEMS' | 'SPACING' | 'SEPARATOR' | 'QR';
 
 /**
  * Receipt item type constants
  */
 export const ReceiptItemType: {
+  /** Image file in base64 format (e.g., company logo) */
+  readonly IMAGE: 'IMAGE';
+  /** Text aligned at the center of the receipt */
+  readonly LABEL: 'LABEL';
+  /** A title or subtitle, displayed as bold text */
   readonly TITLE: 'TITLE';
+  /** Displayed in pairs (e.g., "Amount: ₦10,000") */
   readonly KEY_VALUE: 'KEY_VALUE';
+  /** Table-style items with qty, name, price, amount columns */
   readonly ITEMS: 'ITEMS';
+  /** Vertical spacing between rows */
   readonly SPACING: 'SPACING';
+  /** Line separator between sections */
   readonly SEPARATOR: 'SEPARATOR';
+  /** QR code with encoded content */
   readonly QR: 'QR';
 };
 
@@ -90,11 +101,17 @@ export declare class MoniepointPosSdk {
 
   /**
    * Process card payment on POS terminal
-   * @param amount Payment amount as string (in kobo, e.g., "100000" for ₦1000.00)
-   * @returns Promise resolving to payment result string
+   * @param amount Payment amount in Naira (e.g., "5000" or 5000 for ₦5,000.00)
+   * @returns Promise resolving to payment result string with transaction details
    * @throws {Error} If payment fails or is cancelled
+   *
+   * @example
+   * // Pay ₦5,000
+   * const result = await MoniepointPosSdk.makeCardPayment('5000');
+   * // or
+   * const result = await MoniepointPosSdk.makeCardPayment(5000);
    */
-  static makeCardPayment(amount: string): Promise<string>;
+  static makeCardPayment(amount: string | number): Promise<string>;
 }
 
 export default MoniepointPosSdk;

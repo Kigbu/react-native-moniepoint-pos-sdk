@@ -13,14 +13,17 @@ if (!MoniepointPosModule) {
 
 /**
  * Receipt item types supported by Moniepoint POS SDK
+ * Based on official Moniepoint PaaP SDK documentation
  */
 export const ReceiptItemType = {
-  TITLE: 'TITLE',
-  KEY_VALUE: 'KEY_VALUE',
-  ITEMS: 'ITEMS',
-  SPACING: 'SPACING',
-  SEPARATOR: 'SEPARATOR',
-  QR: 'QR',
+  IMAGE: 'IMAGE',        // Image file in base64
+  LABEL: 'LABEL',        // Text aligned at the center of the receipt
+  TITLE: 'TITLE',        // A title or subtitle, a bold label
+  KEY_VALUE: 'KEY_VALUE', // Displayed in pairs (Key: Value)
+  ITEMS: 'ITEMS',        // Table-style items with qty, name, price, amount
+  SPACING: 'SPACING',    // Vertical spacing between rows
+  SEPARATOR: 'SEPARATOR', // Line separator between sections
+  QR: 'QR',              // QR code with encoded content
 };
 
 /**
@@ -52,11 +55,14 @@ export class MoniepointPosSdk {
 
   /**
    * Process card payment
-   * @param {string} amount - Payment amount (in kobo, e.g., "100000" for ₦1000.00)
-   * @returns {Promise<string>} Payment result
+   * @param {string|number} amount - Payment amount in Naira (e.g., "5000" or 5000 for ₦5,000.00)
+   * @returns {Promise<string>} Payment result with transaction details
    *
    * @example
-   * const result = await MoniepointPosSdk.makeCardPayment('100000');
+   * // Pay ₦5,000
+   * const result = await MoniepointPosSdk.makeCardPayment('5000');
+   * // or
+   * const result = await MoniepointPosSdk.makeCardPayment(5000);
    */
   static async makeCardPayment(amount) {
     return MoniepointPosModule.makeCardPayment(amount.toString());

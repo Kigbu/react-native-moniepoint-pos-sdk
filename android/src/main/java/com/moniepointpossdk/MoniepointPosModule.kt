@@ -108,20 +108,29 @@ class MoniepointPosModule(
           list += ReceiptItem(type = type)
           Log.d(TAG, "Added ${type.name} receipt item")
         }
-        ReceiptItemType.QR -> {
+        ReceiptItemType.IMAGE -> {
           val value = obj.getString("value")
           if (!value.isNullOrEmpty()) {
             list += ReceiptItem(type = type, value = value)
-            Log.d(TAG, "Added QR receipt item with value: $value")
+            Log.d(TAG, "Added IMAGE receipt item (base64 encoded)")
           } else {
-            Log.w(TAG, "QR code value is null or empty, skipping")
+            Log.w(TAG, "IMAGE value is null or empty, skipping")
           }
         }
-        else -> {
+        ReceiptItemType.LABEL, ReceiptItemType.QR, ReceiptItemType.TITLE -> {
+          val value = obj.getString("value")
+          if (!value.isNullOrEmpty()) {
+            list += ReceiptItem(type = type, value = value)
+            Log.d(TAG, "Added ${type.name} receipt item with value: $value")
+          } else {
+            Log.w(TAG, "${type.name} value is null or empty, skipping")
+          }
+        }
+        ReceiptItemType.KEY_VALUE -> {
           val key = if (obj.hasKey("key")) obj.getString("key") else null
           val value = if (obj.hasKey("value")) obj.getString("value") else null
           list += ReceiptItem(type = type, key = key, value = value)
-          Log.d(TAG, "Added ${type.name} receipt item with key: $key, value: $value")
+          Log.d(TAG, "Added KEY_VALUE receipt item with key: $key, value: $value")
         }
       }
     }
@@ -149,4 +158,3 @@ class MoniepointPosModule(
     private const val TAG = "MoniepointPosModule"
   }
 }
-
