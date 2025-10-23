@@ -7,18 +7,16 @@ import com.facebook.react.uimanager.ViewManager
 import com.moniepoint.paap.MoniepointPaapSdk
 
 /**
- * React Native package for Moniepoint POS SDK
- * Requires initialized MoniepointPaapSdk instance to be passed from the host app
+ * React Native package for Moniepoint POS SDK Requires initialized MoniepointPaapSdk instance to be
+ * passed from the host app
  */
-class MoniepointPosPackage(
-    private val sdk: MoniepointPaapSdk
-) : ReactPackage {
-    override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-        return listOf(MoniepointPosModule(reactContext, sdk))
-    }
+class MoniepointPosPackage(private val sdk: MoniepointPaapSdk) : ReactPackage {
+  override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
+    return listOf(MoniepointPosModule(reactContext, sdk))
+  }
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-        return emptyList()
-    }
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    return emptyList()
+  }
 }
 

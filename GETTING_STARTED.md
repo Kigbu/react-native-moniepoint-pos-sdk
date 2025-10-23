@@ -53,7 +53,7 @@ class MainApplication : Application(), ReactApplication {
   override fun onCreate() {
     super.onCreate()
     // ... your existing code ...
-    
+
     // Initialize Moniepoint SDK
     val config = MoniepointPaapConfig.Builder()
       .enableSampleService(true)
@@ -62,7 +62,7 @@ class MainApplication : Application(), ReactApplication {
       .enablePrinting(true)
       .developerName("Your Company Name")  // Replace with your company name
       .build()
-      
+
     moniepointPaapSdk = MoniepointPaapSdk.initialize(this, config)
   }
 
@@ -86,7 +86,7 @@ Edit `android/app/src/main/java/[your-package]/MainActivity.kt`:
 class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    
+
     // Initialize card payment service
     val sdk = MainApplication.moniepointPaapSdk
     sdk.cardPaymentService.initializeCardPayment(this)
@@ -97,19 +97,21 @@ class MainActivity : ReactActivity() {
 ### Step 5: Use in Your React Native Code
 
 ```typescript
-import MoniepointPosSdk, { ReceiptItemType } from 'react-native-moniepoint-pos-sdk';
+import MoniepointPosSdk, {
+  ReceiptItemType,
+} from "react-native-moniepoint-pos-sdk";
 
 // Get terminal info
 const terminal = await MoniepointPosSdk.getTerminalData();
-console.log('Terminal:', terminal.terminalId);
+console.log("Terminal:", terminal.terminalId);
 
 // Process payment (amount in kobo)
-const result = await MoniepointPosSdk.makeCardPayment('100000'); // ₦1,000
+const result = await MoniepointPosSdk.makeCardPayment("100000"); // ₦1,000
 
 // Print receipt
 await MoniepointPosSdk.printReceipt([
-  { type: ReceiptItemType.TITLE, value: 'RECEIPT' },
-  { type: ReceiptItemType.KEY_VALUE, key: 'Amount:', value: '₦1,000.00' },
+  { type: ReceiptItemType.TITLE, value: "RECEIPT" },
+  { type: ReceiptItemType.KEY_VALUE, key: "Amount:", value: "₦1,000.00" },
 ]);
 ```
 
@@ -118,23 +120,22 @@ await MoniepointPosSdk.printReceipt([
 Test your integration with this simple component:
 
 ```typescript
-import React from 'react';
-import { View, Button, Alert } from 'react-native';
-import MoniepointPosSdk from 'react-native-moniepoint-pos-sdk';
+import React from "react";
+import { View, Button, Alert } from "react-native";
+import MoniepointPosSdk from "react-native-moniepoint-pos-sdk";
 
 export default function TestScreen() {
   const testIntegration = async () => {
     try {
       // Test 1: Get terminal data
       const terminal = await MoniepointPosSdk.getTerminalData();
-      Alert.alert('Success', `Terminal ID: ${terminal.terminalId}`);
-      
+      Alert.alert("Success", `Terminal ID: ${terminal.terminalId}`);
+
       // Test 2: Process small payment
-      const result = await MoniepointPosSdk.makeCardPayment('100'); // ₦1
-      Alert.alert('Payment Success', result);
-      
+      const result = await MoniepointPosSdk.makeCardPayment("100"); // ₦1
+      Alert.alert("Payment Success", result);
     } catch (error) {
-      Alert.alert('Error', error.message);
+      Alert.alert("Error", error.message);
     }
   };
 
@@ -151,6 +152,7 @@ export default function TestScreen() {
 ### Issue: "MoniepointPosModule is not available"
 
 **Solution:**
+
 1. Ensure you've added `MoniepointPosPackage` to `getPackages()` in MainApplication
 2. Clean and rebuild: `cd android && ./gradlew clean && cd ..`
 3. Reinstall the app
@@ -158,6 +160,7 @@ export default function TestScreen() {
 ### Issue: Maven credentials error
 
 **Solution:**
+
 1. Double-check credentials in `gradle.properties`
 2. Ensure the file is in the `android/` directory
 3. No extra spaces in property values
@@ -165,12 +168,14 @@ export default function TestScreen() {
 ### Issue: Card payment not initializing
 
 **Solution:**
+
 1. Ensure `initializeCardPayment()` is called in `MainActivity.onCreate()`
 2. Check that you're running on a physical Moniepoint POS terminal
 
 ### Issue: Print not working
 
 **Solution:**
+
 1. Verify terminal has paper
 2. Check that printing is enabled in config: `.enablePrinting(true)`
 3. Ensure receipt items are properly formatted
@@ -184,15 +189,17 @@ export default function TestScreen() {
 ## 💡 Pro Tips
 
 1. **Amount Format**: Always use kobo (100 kobo = ₦1)
+
    ```typescript
    // ✅ Correct
-   await MoniepointPosSdk.makeCardPayment('100000'); // ₦1,000
-   
+   await MoniepointPosSdk.makeCardPayment("100000"); // ₦1,000
+
    // ❌ Wrong
-   await MoniepointPosSdk.makeCardPayment('1000'); // This is ₦10
+   await MoniepointPosSdk.makeCardPayment("1000"); // This is ₦10
    ```
 
 2. **Error Handling**: Always wrap SDK calls in try-catch
+
    ```typescript
    try {
      await MoniepointPosSdk.makeCardPayment(amount);
@@ -212,6 +219,7 @@ export default function TestScreen() {
 ## 🤝 Support
 
 Need help? Contact us:
+
 - GitHub Issues: [Report an issue](https://github.com/yourusername/react-native-moniepoint-pos-sdk/issues)
 - Email: support@yourcompany.com
 

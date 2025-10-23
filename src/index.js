@@ -39,7 +39,7 @@ export class MoniepointPosSdk {
    * Print receipt on POS terminal
    * @param {Array<ReceiptItem>} items - Array of receipt items to print
    * @returns {Promise<void>}
-   * 
+   *
    * @example
    * await MoniepointPosSdk.printReceipt([
    *   { type: ReceiptItemType.TITLE, value: 'RECEIPT' },
@@ -54,7 +54,7 @@ export class MoniepointPosSdk {
    * Process card payment
    * @param {string} amount - Payment amount (in kobo, e.g., "100000" for ₦1000.00)
    * @returns {Promise<string>} Payment result
-   * 
+   *
    * @example
    * const result = await MoniepointPosSdk.makeCardPayment('100000');
    */

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-XX
 
 ### Added
+
 - Initial release of react-native-moniepoint-pos-sdk
 - Card payment processing via `makeCardPayment()`
 - Receipt printing with QR code support via `printReceipt()`
@@ -19,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Full error handling with specific error codes
 
 ### Features
+
 - 💳 Process card payments on Moniepoint POS terminals
 - 🖨️ Print formatted receipts with text, tables, and QR codes
 - 📱 Access terminal information (ID, serial number, model)
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 🎯 TypeScript support with full type definitions
 
 ### Requirements
+
 - React Native >= 0.70
 - Android minSdkVersion >= 24
 - Moniepoint POS SDK 1.0.10+

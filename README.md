@@ -56,7 +56,7 @@ class MainApplication : Application(), ReactApplication {
 
   override fun onCreate() {
     super.onCreate()
-    
+
     // Initialize Moniepoint SDK
     val config = MoniepointPaapConfig.Builder()
       .enableSampleService(true)
@@ -65,7 +65,7 @@ class MainApplication : Application(), ReactApplication {
       .enablePrinting(true)
       .developerName("Your Company Name")
       .build()
-      
+
     moniepointPaapSdk = MoniepointPaapSdk.initialize(this, config)
   }
 
@@ -92,7 +92,7 @@ import com.facebook.react.ReactActivity
 class MainActivity : ReactActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    
+
     // Initialize card payment service
     val sdk = MainApplication.moniepointPaapSdk
     sdk.cardPaymentService.initializeCardPayment(this)
@@ -105,7 +105,9 @@ class MainActivity : ReactActivity() {
 ### Import the SDK
 
 ```typescript
-import MoniepointPosSdk, { ReceiptItemType } from 'react-native-moniepoint-pos-sdk';
+import MoniepointPosSdk, {
+  ReceiptItemType,
+} from "react-native-moniepoint-pos-sdk";
 ```
 
 ### Get Terminal Data
@@ -114,11 +116,11 @@ import MoniepointPosSdk, { ReceiptItemType } from 'react-native-moniepoint-pos-s
 const getTerminalInfo = async () => {
   try {
     const terminalData = await MoniepointPosSdk.getTerminalData();
-    console.log('Terminal ID:', terminalData.terminalId);
-    console.log('Serial No:', terminalData.serialNo);
-    console.log('Model:', terminalData.model);
+    console.log("Terminal ID:", terminalData.terminalId);
+    console.log("Serial No:", terminalData.serialNo);
+    console.log("Model:", terminalData.model);
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 };
 ```
@@ -131,11 +133,11 @@ const processPayment = async (amount: number) => {
     // Amount should be in kobo (100 kobo = ₦1)
     const amountInKobo = (amount * 100).toString();
     const result = await MoniepointPosSdk.makeCardPayment(amountInKobo);
-    
-    console.log('Payment successful:', result);
+
+    console.log("Payment successful:", result);
     return result;
   } catch (error) {
-    console.error('Payment failed:', error);
+    console.error("Payment failed:", error);
     throw error;
   }
 };
@@ -152,28 +154,28 @@ const printPaymentReceipt = async (invoiceData) => {
     const receiptItems = [
       {
         type: ReceiptItemType.TITLE,
-        value: 'YOUR COMPANY NAME',
+        value: "YOUR COMPANY NAME",
       },
       {
         type: ReceiptItemType.TITLE,
-        value: 'PAYMENT RECEIPT',
+        value: "PAYMENT RECEIPT",
       },
       { type: ReceiptItemType.SPACING },
       { type: ReceiptItemType.SEPARATOR },
       { type: ReceiptItemType.SPACING },
       {
         type: ReceiptItemType.KEY_VALUE,
-        key: 'Invoice No:',
+        key: "Invoice No:",
         value: invoiceData.invoiceNo,
       },
       {
         type: ReceiptItemType.KEY_VALUE,
-        key: 'Customer:',
+        key: "Customer:",
         value: invoiceData.customerName,
       },
       {
         type: ReceiptItemType.KEY_VALUE,
-        key: 'Date:',
+        key: "Date:",
         value: new Date().toLocaleDateString(),
       },
       { type: ReceiptItemType.SPACING },
@@ -191,9 +193,9 @@ const printPaymentReceipt = async (invoiceData) => {
     ];
 
     await MoniepointPosSdk.printReceipt(receiptItems);
-    console.log('Receipt printed successfully');
+    console.log("Receipt printed successfully");
   } catch (error) {
-    console.error('Print error:', error);
+    console.error("Print error:", error);
   }
 };
 ```
@@ -203,46 +205,46 @@ const printPaymentReceipt = async (invoiceData) => {
 ```typescript
 const printSalesReceipt = async () => {
   const receiptItems = [
-    { type: ReceiptItemType.TITLE, value: 'SALES RECEIPT' },
+    { type: ReceiptItemType.TITLE, value: "SALES RECEIPT" },
     { type: ReceiptItemType.SPACING },
     {
       type: ReceiptItemType.ITEMS,
       items: [
         {
-          qty: '2',
-          name: 'Product A',
-          price: '₦500.00',
-          amount: '₦1,000.00',
+          qty: "2",
+          name: "Product A",
+          price: "₦500.00",
+          amount: "₦1,000.00",
         },
         {
-          qty: '1',
-          name: 'Product B',
-          price: '₦300.00',
-          amount: '₦300.00',
+          qty: "1",
+          name: "Product B",
+          price: "₦300.00",
+          amount: "₦300.00",
         },
         {
-          qty: '3',
-          name: 'Product C',
-          price: '₦200.00',
-          amount: '₦600.00',
+          qty: "3",
+          name: "Product C",
+          price: "₦200.00",
+          amount: "₦600.00",
         },
       ],
     },
     { type: ReceiptItemType.SEPARATOR },
     {
       type: ReceiptItemType.KEY_VALUE,
-      key: 'SUBTOTAL:',
-      value: '₦1,900.00',
+      key: "SUBTOTAL:",
+      value: "₦1,900.00",
     },
     {
       type: ReceiptItemType.KEY_VALUE,
-      key: 'TAX (7.5%):',
-      value: '₦142.50',
+      key: "TAX (7.5%):",
+      value: "₦142.50",
     },
     { type: ReceiptItemType.SEPARATOR },
     {
       type: ReceiptItemType.TITLE,
-      value: 'TOTAL: ₦2,042.50',
+      value: "TOTAL: ₦2,042.50",
     },
   ];
 
@@ -252,21 +254,23 @@ const printSalesReceipt = async () => {
 
 ## 📋 Receipt Item Types
 
-| Type | Description | Required Fields |
-|------|-------------|----------------|
-| `TITLE` | Large centered text | `value` |
-| `KEY_VALUE` | Key-value pair (left-right) | `key`, `value` |
-| `ITEMS` | Table of items | `items` (array of RowItem) |
-| `SPACING` | Empty line | None |
-| `SEPARATOR` | Horizontal line | None |
-| `QR` | QR code | `value` (URL or text) |
+| Type        | Description                 | Required Fields            |
+| ----------- | --------------------------- | -------------------------- |
+| `TITLE`     | Large centered text         | `value`                    |
+| `KEY_VALUE` | Key-value pair (left-right) | `key`, `value`             |
+| `ITEMS`     | Table of items              | `items` (array of RowItem) |
+| `SPACING`   | Empty line                  | None                       |
+| `SEPARATOR` | Horizontal line             | None                       |
+| `QR`        | QR code                     | `value` (URL or text)      |
 
 ## 🔧 Complete Integration Example
 
 ```typescript
-import React, { useState } from 'react';
-import { View, Button, Text, Alert } from 'react-native';
-import MoniepointPosSdk, { ReceiptItemType } from 'react-native-moniepoint-pos-sdk';
+import React, { useState } from "react";
+import { View, Button, Text, Alert } from "react-native";
+import MoniepointPosSdk, {
+  ReceiptItemType,
+} from "react-native-moniepoint-pos-sdk";
 
 export default function PaymentScreen() {
   const [terminalInfo, setTerminalInfo] = useState(null);
@@ -275,36 +279,36 @@ export default function PaymentScreen() {
     try {
       const info = await MoniepointPosSdk.getTerminalData();
       setTerminalInfo(info);
-      Alert.alert('Success', `Terminal: ${info.terminalId}`);
+      Alert.alert("Success", `Terminal: ${info.terminalId}`);
     } catch (error) {
-      Alert.alert('Error', error.message);
+      Alert.alert("Error", error.message);
     }
   };
 
   const handleMakePayment = async () => {
     try {
       // Process ₦1,000 payment (100000 kobo)
-      const result = await MoniepointPosSdk.makeCardPayment('100000');
-      
-      Alert.alert('Payment Successful', result);
-      
+      const result = await MoniepointPosSdk.makeCardPayment("100000");
+
+      Alert.alert("Payment Successful", result);
+
       // Print receipt after successful payment
       await printReceipt();
     } catch (error) {
-      Alert.alert('Payment Failed', error.message);
+      Alert.alert("Payment Failed", error.message);
     }
   };
 
   const printReceipt = async () => {
     const receipt = [
-      { type: ReceiptItemType.TITLE, value: 'MY STORE' },
-      { type: ReceiptItemType.TITLE, value: 'PAYMENT RECEIPT' },
+      { type: ReceiptItemType.TITLE, value: "MY STORE" },
+      { type: ReceiptItemType.TITLE, value: "PAYMENT RECEIPT" },
       { type: ReceiptItemType.SPACING },
       { type: ReceiptItemType.SEPARATOR },
-      { type: ReceiptItemType.KEY_VALUE, key: 'Amount:', value: '₦1,000.00' },
-      { type: ReceiptItemType.KEY_VALUE, key: 'Status:', value: 'PAID' },
+      { type: ReceiptItemType.KEY_VALUE, key: "Amount:", value: "₦1,000.00" },
+      { type: ReceiptItemType.KEY_VALUE, key: "Status:", value: "PAID" },
       { type: ReceiptItemType.SPACING },
-      { type: ReceiptItemType.QR, value: 'https://mystore.com/receipt/123' },
+      { type: ReceiptItemType.QR, value: "https://mystore.com/receipt/123" },
     ];
 
     await MoniepointPosSdk.printReceipt(receipt);
@@ -313,9 +317,7 @@ export default function PaymentScreen() {
   return (
     <View style={{ padding: 20 }}>
       <Button title="Get Terminal Info" onPress={handleGetTerminalInfo} />
-      {terminalInfo && (
-        <Text>Terminal ID: {terminalInfo.terminalId}</Text>
-      )}
+      {terminalInfo && <Text>Terminal ID: {terminalInfo.terminalId}</Text>}
       <Button title="Make Payment" onPress={handleMakePayment} />
     </View>
   );
@@ -326,27 +328,27 @@ export default function PaymentScreen() {
 
 ```typescript
 try {
-  await MoniepointPosSdk.makeCardPayment('100000');
+  await MoniepointPosSdk.makeCardPayment("100000");
 } catch (error) {
   switch (error.code) {
-    case 'CARD_PAYMENT_ERROR':
+    case "CARD_PAYMENT_ERROR":
       // Payment initialization failed
-      console.error('Payment error:', error.message);
+      console.error("Payment error:", error.message);
       break;
-    case 'CARD_PAYMENT_RESULT_ERROR':
+    case "CARD_PAYMENT_RESULT_ERROR":
       // Payment result processing failed
-      console.error('Result error:', error.message);
+      console.error("Result error:", error.message);
       break;
-    case 'PRINT_ERROR':
+    case "PRINT_ERROR":
       // Printing failed
-      console.error('Print error:', error.message);
+      console.error("Print error:", error.message);
       break;
-    case 'TERMINAL_DATA_ERROR':
+    case "TERMINAL_DATA_ERROR":
       // Terminal data retrieval failed
-      console.error('Terminal error:', error.message);
+      console.error("Terminal error:", error.message);
       break;
     default:
-      console.error('Unknown error:', error.message);
+      console.error("Unknown error:", error.message);
   }
 }
 ```
@@ -370,6 +372,7 @@ try {
 ## 🤝 Support
 
 For issues and questions:
+
 - Open an issue on [GitHub](https://github.com/yourusername/react-native-moniepoint-pos-sdk/issues)
 - Contact: your-email@example.com
 

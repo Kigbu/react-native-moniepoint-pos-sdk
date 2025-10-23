@@ -13,20 +13,19 @@ export interface TerminalData {
 /**
  * Receipt item types supported by Moniepoint POS SDK
  */
-export enum ReceiptItemType {
-  /** Large centered text */
-  TITLE = 'TITLE',
-  /** Key-value pair with left-right alignment */
-  KEY_VALUE = 'KEY_VALUE',
-  /** Table of items with qty, name, price, and amount columns */
-  ITEMS = 'ITEMS',
-  /** Empty line spacing */
-  SPACING = 'SPACING',
-  /** Horizontal separator line */
-  SEPARATOR = 'SEPARATOR',
-  /** QR code */
-  QR = 'QR',
-}
+export type ReceiptItemType = 'TITLE' | 'KEY_VALUE' | 'ITEMS' | 'SPACING' | 'SEPARATOR' | 'QR';
+
+/**
+ * Receipt item type constants
+ */
+export const ReceiptItemType: {
+  readonly TITLE: 'TITLE';
+  readonly KEY_VALUE: 'KEY_VALUE';
+  readonly ITEMS: 'ITEMS';
+  readonly SPACING: 'SPACING';
+  readonly SEPARATOR: 'SEPARATOR';
+  readonly QR: 'QR';
+};
 
 /**
  * Row item for table-style receipts
@@ -58,16 +57,16 @@ export interface ReceiptItem {
 
 /**
  * Moniepoint POS SDK wrapper for React Native
- * 
+ *
  * @example
  * import MoniepointPosSdk, { ReceiptItemType } from 'react-native-moniepoint-pos-sdk';
- * 
+ *
  * // Get terminal data
  * const terminal = await MoniepointPosSdk.getTerminalData();
- * 
+ *
  * // Process payment
  * const result = await MoniepointPosSdk.makeCardPayment('100000');
- * 
+ *
  * // Print receipt
  * await MoniepointPosSdk.printReceipt([
  *   { type: ReceiptItemType.TITLE, value: 'RECEIPT' }
