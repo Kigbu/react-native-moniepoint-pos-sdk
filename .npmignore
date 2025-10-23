@@ -1,0 +1,35 @@
+# Source
+android/build/
+android/.gradle/
+android/local.properties
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Tests
+__tests__/
+*.test.ts
+*.test.js
+coverage/
+
+# Docs
+docs/
+examples/
+.github/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# CI/CD
+.travis.yml
+.circleci/
+
+# Misc
+.DS_Store
+*.log
+

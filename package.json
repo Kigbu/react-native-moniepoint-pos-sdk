@@ -1,0 +1,40 @@
+{
+  "name": "react-native-moniepoint-pos-sdk",
+  "version": "1.0.0",
+  "description": "React Native wrapper for Moniepoint POS SDK - Enables card payments, receipt printing, and terminal data access",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "moniepoint",
+    "pos",
+    "payment",
+    "terminal",
+    "receipt-printing",
+    "card-payment",
+    "nigeria",
+    "fintech"
+  ],
+  "author": "I-Tech Platform Limited",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/react-native-moniepoint-pos-sdk.git"
+  },
+  "homepage": "https://github.com/yourusername/react-native-moniepoint-pos-sdk#readme",
+  "files": [
+    "src",
+    "android",
+    "ios",
+    "react-native-moniepoint-pos-sdk.podspec",
+    "README.md"
+  ]
+}
+

@@ -1,0 +1,36 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Android
+android/build/
+android/.gradle/
+android/local.properties
+*.iml
+.gradle/
+
+# iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+*.xcuserdata
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Build
+lib/
+dist/
+build/
+
+# Testing
+coverage/
+.nyc_output/
+
